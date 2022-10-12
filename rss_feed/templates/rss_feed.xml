@@ -12,6 +12,6 @@
         <language>en-us</language>
         <copyright/>
         <itunes:explicit>{{ pod.explicit }}</itunes:explicit>
-{% include 'item.xml' %}
+        {% include 'item.xml' %}
     </channel>
 </rss>

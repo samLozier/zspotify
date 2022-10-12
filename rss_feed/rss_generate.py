@@ -10,7 +10,7 @@ session_orm = session()
 
 env = Environment(
     loader=FileSystemLoader(Path(__file__).parent/'templates/'),
-autoescape=select_autoescape()
+    autoescape=select_autoescape()
 )
 podcast = session_orm.query(Podcast).first()
 host='https://7f07-75-172-71-56.eu.ngrok.io'
