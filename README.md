@@ -1,21 +1,51 @@
 # zspotify
+
+[![](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/jsavargas/zspotify)
+[![](https://badgen.net/badge/icon/docker?icon=docker&label)](https://hub.docker.com/r/jsavargas/zspotify)
+[![Docker Pulls](https://badgen.net/docker/pulls/jsavargas/zspotify?icon=docker&label=pulls)](https://hub.docker.com/r/jsavargas/zspotify/)
+[![Docker Stars](https://badgen.net/docker/stars/jsavargas/zspotify?icon=docker&label=stars)](https://hub.docker.com/r/jsavargas/zspotify/)
+[![Docker Image Size](https://badgen.net/docker/size/jsavargas/zspotify?icon=docker&label=image%20size)](https://hub.docker.com/r/jsavargas/zspotify/)
+![Github stars](https://badgen.net/github/stars/jsavargas/zspotify?icon=github&label=stars)
+![Github forks](https://badgen.net/github/forks/jsavargas/zspotify?icon=github&label=forks)
+![Github last-commit](https://img.shields.io/github/last-commit/jsavargas/zspotify)
+![Github license](https://badgen.net/github/license/jsavargas/zspotify)
+
+
+
+## Find us at:
+
+* [GitHub](https://github.com/jsavargas/zspotify) - GitHub of this repository.
+* [DockerHub](https://hub.docker.com/r/jsavargas/zspotify) - DockerHub of this repository.
+
 Fork of https://github.com/Footsiefat/zspotify
 
 Spotify song downloader without injecting into the windows client
 
+![](images/image01.png)
+
+![](images/image02.png)
+
+## Docker:
+
 ```
-Requirements:
+  docker run --rm -it -v $(pwd)/docker/config:/root/.config/ZSpotify -v $(pwd)/docker/download:/root/Music jsavargas/zspotify
+  
+  docker-compose run --rm zspotify
+```
 
+
+
+## Requirements:
+
+```
 Binaries
-
     - Python 3.8 or greater
     - ffmpeg*
 
 Python packages:
-
     - pip install -r requirements.txt
-
 ```
+
 \*ffmpeg can be installed via apt for Debian-based distros or by downloading the binaries from [ffmpeg.org](https://ffmpeg.org) and placing them in your %PATH% in Windows.
 
 
@@ -26,6 +56,7 @@ Command line usage:
 Extra command line options:
   -p, --playlist       Downloads a saved playlist from your account
   -ls, --liked-songs   Downloads all the liked songs from your account
+  -pid, --playlist-id [id] [folder_name]  Downloads a playlist from their id and saves in folder_name. This playlist can be created by other user, not only your playlists. 
 
 Special hardcoded options:
   ROOT_PATH           Change this path if you don't like the default directory where ZSpotify saves the music
@@ -41,16 +72,22 @@ Special hardcoded options:
 
 
 
-## **Docker:**
-
-```
-  docker run -it -v $(pwd)/docker/config:/config -v $(pwd)/docker/download:/download jsavargas/zspotify
-  
-  docker-compose run --rm zspotify
-```
-
 
 ## **Changelog:**
+
+**v1.9.3 (30 Sep 2022)**
+- add KeyboardInterrupt control - Control + C
+
+**v1.9.2 (19 Aug 2022)**
+- Added playlist_id support (https://github.com/VicDominguez)
+- Fix -ls argument (https://github.com/axsddlr)
+- Song Archive, to SKIP_PREVIOUSLY_DOWNLOADED (https://github.com/diebolo)
+
+**v1.9.1 (19 Aug 2022)**
+- Added extra option to download a playlist with the playlist-id. This playlist doesn't need be yours, it can be from other user.
+
+**v1.9 (20 Jun 2022):**
+- Fix fails at 87%
 
 **v1.8 (23 Oct 2021):**
 - exclude album_type single
@@ -58,7 +95,6 @@ Special hardcoded options:
 - Changed welcome banner and removed unnecessary debug print statements.
 - Show single progress bar for entire album.
 - Added a small delay between downloading each track when downloading in bulk to help with downloading issues and potential bans.
-
 
 **v1.7 (21 Oct 2021):**
 - Added docker support
@@ -76,5 +112,4 @@ Special hardcoded options:
 - Added option to just download the raw audio with no re-encoding at all.
 - Added Shebang line so it runs smoother on Linux.
 - Made it download the entire track at once now so it is more efficent and fixed a bug users encountered.
-
 

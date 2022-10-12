@@ -138,9 +138,10 @@ dmypy.json
 cython_debug/
 
 # Spotify Credentials
-credentials.json
+credentials*
 
 #Download Folder
 ZSpotify\ Music/
 docker-compose.yml
 docker-compose.yaml
+docker-compose.dev.yml
