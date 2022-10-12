@@ -1,0 +1,16 @@
+{% for ep in pod.Episode %}
+<item>
+    <title>{{ ep.name }}</title>
+    <description>
+        {{ ep.description }}
+    </description>
+    <pubDate>{{ ep.release_date }}</pubDate>
+    <guid>{{ podcast.root_url }}/{{ ep.id }}</guid>
+    <itunes:summary>
+        {{ emp.html_description }}
+    </itunes:summary>
+    <itunes:duration>{{ ep.duration }}</itunes:duration>
+    <enclosure length="{{ ep.length }}" type="audio/mpeg"
+               url="{{ pod.root_rul }}.mp3"/>
+</item>
+{% endfor %}
