@@ -1128,10 +1128,7 @@ def get_eps(show):
     token = SESSION.tokens().get("user-read-email")
     return get_show_episodes(token, show.id)
 
-
-show = session_orm.query(Podcast).first()
-eps = get_eps(show)
-for ep in eps:
+def prep_ep(ep):
     prepped_epp = {k: v for k, v in ep.items() if k in Episode.__table__.columns.keys()}
     prepped_epp["release_date"] = datetime.datetime.strptime(
         prepped_epp["release_date"], "%Y-%m-%d"
@@ -1139,11 +1136,11 @@ for ep in eps:
     prepped_epp["external_urls"] = str(prepped_epp["external_urls"])
     prepped_epp["podcast_id"] = show.id
     prepped_epp["is_downloaded"] = False
-    prepped_epp['slug_name'] = slugify(prepped_epp['name'])
+    prepped_epp['slug_name'] = show.slug_name + "-" + slugify(prepped_epp['name'])
     if (
-        existing_show := session_orm.query(Episode)
-        .filter(Episode.id == prepped_epp["id"])
-        .first()
+            existing_show := session_orm.query(Episode)
+                    .filter(Episode.id == prepped_epp["id"])
+                    .first()
     ) is not None:
         session_orm.query(Episode).filter(Episode.id == prepped_epp["id"]).update(
             prepped_epp
@@ -1152,16 +1149,19 @@ for ep in eps:
     else:
         session_orm.add(Episode(**prepped_epp))
         session_orm.commit()
-saved_epp = session_orm.query(Episode).filter(Episode.is_downloaded == False).all()
-saved_epp
 
-for episode in saved_epp:
-    file_path = download_episode(episode_id_str=episode.id)
-    file_size = Path(file_path).stat().st_size
-    session_orm.query(Episode).filter(Episode.id == episode.id).update(
-        {"is_downloaded": True, "file_path": str(file_path), "file_size": file_size}
-    )
-    session_orm.commit()
+for show in session_orm.query(Podcast).all():
+    eps = get_eps(show)
+    for ep in eps:
+        prep_ep(ep)
+    saved_epp = session_orm.query(Episode).filter(Episode.is_downloaded == False).all()
+    for episode in saved_epp:
+        file_path = download_episode(episode_id_str=episode.id)
+        file_size = Path(file_path).stat().st_size
+        session_orm.query(Episode).filter(Episode.id == episode.id).update(
+            {"is_downloaded": True, "file_path": str(file_path), "file_size": file_size}
+        )
+        session_orm.commit()
 
 
 # def main():

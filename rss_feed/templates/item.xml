@@ -1,16 +1,19 @@
-{% for ep in pod.Episode %}
+{#{% extends "rss_feed.xml" %}#}
+{% block content %}
+    {% for ep in pod.episodes %}
 <item>
     <title>{{ ep.name }}</title>
     <description>
         {{ ep.description }}
     </description>
     <pubDate>{{ ep.release_date }}</pubDate>
-    <guid>{{ podcast.root_url }}/{{ ep.id }}</guid>
+    <guid>{{ pod.root_url }}/{{ ep.id }}</guid>
     <itunes:summary>
-        {{ emp.html_description }}
+        {{ ep.html_description }}
     </itunes:summary>
     <itunes:duration>{{ ep.duration }}</itunes:duration>
     <enclosure length="{{ ep.length }}" type="audio/mpeg"
-               url="{{ pod.root_rul }}.mp3"/>
+               url="{{ pod.root_url}}{{ pod.slug_name }}-{{ ep.slug_name }}.mp3"/>
 </item>
 {% endfor %}
+{% endblock %}

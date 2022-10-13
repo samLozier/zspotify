@@ -11,7 +11,8 @@
         <description>{{ pod.description }}</description>
         <language>en-us</language>
         <copyright/>
-        <itunes:explicit>{{ pod.explicit }}</itunes:explicit>
+        <itunes:explicit>Yes</itunes:explicit>
+        <itunes:category text="Comedy"/>
         {% include 'item.xml' %}
     </channel>
 </rss>
